@@ -28,6 +28,7 @@ ul.attribute {
 
 table.attributes tr td:first-child {
     padding-right: 3em;
+    padding-bottom: 1em;
 }
 
 table.attributes tr td {
@@ -36,4 +37,9 @@ table.attributes tr td {
 
 div {
     display: block;
+}
+
+pre {
+    margin-top: 0;
+    margin-bottom: 0;
 }
