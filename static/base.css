@@ -33,6 +33,7 @@ table.attributes tr td:first-child {
 
 table.attributes tr td {
     vertical-align: top;
+    line-height: 1.5;
 }
 
 div {
