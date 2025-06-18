@@ -18,26 +18,18 @@ const color = d3.scaleOrdinal(d3.schemeCategory20);
 
 let container = document.getElementsByClassName("graph-cocycle-container")[0];
 
-for (let i = 0; i < representative.length; i++) {
-    let [coeff, graph] = representative[i];
+for (let i = 0; i < representative.terms.length; i++) {
+    let [coeff, graph] = representative.terms[i];
     // Create graph for d3.
     let d3graph = {
         nodes: [],
         links: []
     };
-    // NOTE: We assume graphs are connected.
-    let max_vertex = 0;
     for (let j = 0; j < graph.length; j++) {
         let [v, w] = graph[j];
         d3graph.links.push({source: v, target: w});
-        if (v > max_vertex) {
-            max_vertex = v;
-        }
-        if (w > max_vertex) {
-            max_vertex = w;
-        }
     }
-    for (let v = 0; v <= max_vertex; v++) {
+    for (let v = 0; v < representative.num_vertices; v++) {
         d3graph.nodes.push({name: v.toString(), group: 1});
     }
     // Use cola for the graph layout.
