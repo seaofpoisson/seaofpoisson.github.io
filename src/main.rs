@@ -61,9 +61,9 @@ fn main() -> std::io::Result<()> {
             poisson_structures.push((name, toml_table["name"].as_str().unwrap().to_string()));
         }
     }
-    poisson_structures.sort();
 
     // Create graph cohomology classes.
+    let mut graph_cohomology_classes: Vec<(String, String)> = vec![];
     let graph_cohomology_class_template = env.get_template("graph_cohomology_class.html").unwrap();
     for entry in fs::read_dir("data/graph_cohomology/")? {
         let entry = entry?;
@@ -84,13 +84,17 @@ fn main() -> std::io::Result<()> {
                 representative_json => fs::read_to_string("data/graph_cohomology/".to_owned() + &name + "/" + &name + ".json")?,
             };
             fs::write("_site/graph_cohomology/".to_owned() + &name + ".html", graph_cohomology_class_template.render(ctx).unwrap())?;
+            graph_cohomology_classes.push((name, toml_table["name"].as_str().unwrap().to_string()));
         }
     }
 
     // Create index.
+    poisson_structures.sort();
+    graph_cohomology_classes.sort();
     let index_template = env.get_template("index.html").unwrap();
     fs::write("_site/index.html", index_template.render(context!{
-        poisson_structures => poisson_structures
+        poisson_structures => poisson_structures,
+        graph_cohomology_classes => graph_cohomology_classes,
     }).unwrap())?;
 
     println!("Finished generating the Sea of Poisson structures website.");

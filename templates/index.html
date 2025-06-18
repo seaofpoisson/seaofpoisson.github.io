@@ -15,9 +15,8 @@ Poisson structures:
 </ul>
 Graph cohomology classes (which act on Poisson structures):
 <ul class="index">
-    <li><a href="graph_cohomology/3_wheel_graph_cohomology_class.html">3-wheel graph cohomology class</a></li>
-    <li><a href="graph_cohomology/5_wheel_graph_cohomology_class.html">5-wheel graph cohomology class</a></li>
-    <li><a href="graph_cohomology/7_wheel_graph_cohomology_class.html">7-wheel graph cohomology class</a></li>
-    <li><a href="">9-wheel graph cohomology class</a></li>
+{% for slug, name in graph_cohomology_classes %}
+    <li><a href="graph_cohomology/{{ slug }}.html">{{ name }}</a></li>
+{% endfor %}
 </ul>
 {% endblock %}
