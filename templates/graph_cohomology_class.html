@@ -70,15 +70,15 @@ for (let i = 0; i < representative.terms.length; i++) {
     // Put the graph and its coefficient in a div.
     let div = document.createElement("div");
     div.style.lineHeight = "100px";
+    const has_minus = coeff[0] === "-";
     let coeff_latex = "";
     if (coeff.indexOf("/") === -1) {
-        coeff_latex = coeff;
+        coeff_latex = (has_minus ? coeff.substring(1) : coeff);
     } else {
-        const has_minus = coeff[0] === "-";
         const [num, denom] = coeff.split("/");
         coeff_latex = "\\frac{" + (has_minus ? num.substring(1) : num) + "}{" + denom + "}";
-        coeff_latex = (has_minus ? "-" : "+") + coeff_latex;
     }
+    coeff_latex = (has_minus ? "-" : "+") + coeff_latex;
     katex.render(coeff_latex, div, {
         throwOnError: false
     });
