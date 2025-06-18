@@ -74,11 +74,10 @@ for (let i = 0; i < representative.terms.length; i++) {
     if (coeff.indexOf("/") === -1) {
         coeff_latex = coeff;
     } else {
-        let [num, denom] = coeff.split("/");
-        coeff_latex = "\\frac{" + num + "}{" + denom + "}";
-    }
-    if (coeff[0] !== "-") {
-        coeff_latex = "+" + coeff_latex;
+        const has_minus = coeff[0] === "-";
+        const [num, denom] = coeff.split("/");
+        coeff_latex = "\\frac{" + (has_minus ? num.substring(1) : num) + "}{" + denom + "}";
+        coeff_latex = (has_minus ? "-" : "+") + coeff_latex;
     }
     katex.render(coeff_latex, div, {
         throwOnError: false
