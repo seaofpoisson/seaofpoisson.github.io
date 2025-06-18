@@ -80,6 +80,7 @@ fn main() -> std::io::Result<()> {
                 tags => toml_table["tags"],
                 references => toml_table["references"],
                 definition_code_gcaops => fs::read_to_string("data/graph_cohomology/".to_owned() + &name + "/" + &name + ".sage")?,
+                representative_json => fs::read_to_string("data/graph_cohomology/".to_owned() + &name + "/" + &name + ".json")?,
             };
             fs::write("_site/graph_cohomology/".to_owned() + &name + ".html", graph_cohomology_class_template.render(ctx).unwrap())?;
         }

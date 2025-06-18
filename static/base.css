@@ -44,3 +44,8 @@ pre {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.graph-cocycle-container {
+    display: grid;
+    grid-template-columns: repeat(4, 150px);
+}

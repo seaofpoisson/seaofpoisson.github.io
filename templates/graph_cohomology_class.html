@@ -1,5 +1,101 @@
 {% extends "base.html" %}
 {% set path_to_root = '..' %}
+{% block extra_head %}
+{#
+<script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/webcola@3.4.0/WebCola/cola.js"></script>
+#}
+<script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/webcola@3.4.0/WebCola/cola.min.js"></script>
+<script type="module">
+{% autoescape false %}
+const representative = {{ representative_json }};
+{% endautoescape %}
+
+const width = 100;
+const height = 100;
+const color = d3.scaleOrdinal(d3.schemeCategory20);
+
+let container = document.getElementsByClassName("graph-cocycle-container")[0];
+
+for (let i = 0; i < representative.length; i++) {
+    let [coeff, graph] = representative[i];
+    // Create graph for d3.
+    let d3graph = {
+        nodes: [],
+        links: []
+    };
+    // NOTE: We assume graphs are connected.
+    let max_vertex = 0;
+    for (let j = 0; j < graph.length; j++) {
+        let [v, w] = graph[j];
+        d3graph.links.push({source: v, target: w});
+        if (v > max_vertex) {
+            max_vertex = v;
+        }
+        if (w > max_vertex) {
+            max_vertex = w;
+        }
+    }
+    for (let v = 0; v <= max_vertex; v++) {
+        d3graph.nodes.push({name: v.toString(), group: 1});
+    }
+    // Use cola for the graph layout.
+    const d3cola = cola.d3adaptor(d3).size([width, height]);
+    d3cola.nodes(d3graph.nodes)
+        .links(d3graph.links)
+        .avoidOverlaps(true)
+        .jaccardLinkLengths(30,0.7)
+        .start(30);
+    // Render the graph to an SVG using d3.
+    const svg = d3.create("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("vertical-align", "middle");
+    let link = svg.selectAll(".link")
+        .data(d3graph.links)
+        .enter().append("line")
+        .attr("class", "link")
+        .style("stroke", "white")
+        .style("stroke-width", "2");
+    let node = svg.selectAll(".node")
+        .data(d3graph.nodes)
+        .enter().append("circle")
+        .attr("class", "node")
+        .attr("r", 5)
+        .style("fill", "white")
+        .call(d3cola.drag);
+    node.append("title")
+        .text(function (d) { return d.name; });
+    d3cola.on("tick", function () {
+        link.attr("x1", function (d) { return d.source.x; })
+            .attr("y1", function (d) { return d.source.y; })
+            .attr("x2", function (d) { return d.target.x; })
+            .attr("y2", function (d) { return d.target.y; });
+        node.attr("cx", function (d) { return d.x; })
+            .attr("cy", function (d) { return d.y; });
+    });
+    // Put the graph and its coefficient in a div.
+    let div = document.createElement("div");
+    div.style.lineHeight = "100px";
+    let coeff_latex = "";
+    if (coeff.indexOf("/") === -1) {
+        coeff_latex = coeff;
+    } else {
+        let [num, denom] = coeff.split("/");
+        coeff_latex = "\\frac{" + num + "}{" + denom + "}";
+    }
+    if (coeff[0] !== "-") {
+        coeff_latex = "+" + coeff_latex;
+    }
+    katex.render(coeff_latex, div, {
+        throwOnError: false
+    });
+    div.appendChild(svg.node());
+    container.appendChild(div);
+}
+</script>
+{% endblock %}
 {% block title_plain %}{{ name_plain }}{% endblock %}
 {% block title %}<a href="../index.html">Index</a> &raquo; {{ name }}{% endblock %}
 {% block body %}
@@ -10,6 +106,7 @@
 </table>
 <h2>Definition</h2>
 <table class="attributes">
-<tr><td>Code (gcaops)</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
+<tr><td>Representative:</td><td><div class="graph-cocycle-container"></div></td></tr>
+<tr><td>Code (gcaops):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
 </table>
 {% endblock %}
