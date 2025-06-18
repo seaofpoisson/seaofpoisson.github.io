@@ -1,5 +1,7 @@
 name = "3-wheel graph cohomology class"
 name_plain = "3-wheel graph cohomology class"
 alternative_names = ["Tetrahedron"]
+num_vertices = 4
+num_edges = 6
 tags = ["wheel graph cohomology class"]
 references = []

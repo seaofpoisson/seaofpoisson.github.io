@@ -92,6 +92,8 @@ for (let i = 0; i < representative.terms.length; i++) {
 {% block body %}
 <table class="attributes">
 <tr><td>Alternative names:</td><td>{% if alternative_names %}<ul class="attribute">{% for alt_name in alternative_names %}<li>{{ alt_name }}</li>{% endfor %}</ul>{% else %}-{% endif %}</td></tr>
+<tr><td>Number of vertices (per graph):</td><td>{{ num_vertices }}</td></tr>
+<tr><td>Number of edges (per graph):</td><td>{{ num_edges }}</td></tr>
 <tr><td>Tags:</td><td>{% if tags %}{% for tag in tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %}</td></tr>
 <tr><td>References:</td><td>{% if references %}<ul class="attribute">{% for reference in references %}<li>{{ reference }}</li>{% endfor %}</ul>{% else %}-{% endif %}</td></tr>
 </table>

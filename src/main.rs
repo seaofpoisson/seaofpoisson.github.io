@@ -77,6 +77,8 @@ fn main() -> std::io::Result<()> {
                 name => toml_table["name"],
                 name_plain => toml_table["name_plain"],
                 alternative_names => toml_table["alternative_names"],
+                num_vertices => toml_table["num_vertices"],
+                num_edges => toml_table["num_edges"],
                 tags => toml_table["tags"],
                 references => toml_table["references"],
                 definition_code_gcaops => fs::read_to_string("data/graph_cohomology/".to_owned() + &name + "/" + &name + ".sage")?,
