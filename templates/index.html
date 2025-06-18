@@ -9,9 +9,9 @@ Families of Poisson structures:
 </ul>
 Poisson structures:
 <ul class="index">
-    <li><a href="poisson_structures/generic_poisson_structure_2d.html">Generic Poisson structure on $\mathbb{R}^2$</a></li>
-    <li><a href="poisson_structures/nambu_poisson_structure_3d.html">Nambu–Poisson structure on $\mathbb{R}^3$</a></li>
-    <li><a href="poisson_structures/nambu_poisson_structure_4d.html">Nambu–Poisson structure on $\mathbb{R}^4$</a></li>
+{% for slug, name in poisson_structures %}
+    <li><a href="poisson_structures/{{ slug }}.html">{{ name }}</a></li>
+{% endfor %}
 </ul>
 Graph cohomology classes (which act on Poisson structures):
 <ul class="index">
