@@ -8,9 +8,6 @@
 <script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/webcola@3.4.0/WebCola/cola.min.js"></script>
 <script type="module">
-{% autoescape false %}
-const representative = {{ representative_json }};
-{% endautoescape %}
 
 const width = 100;
 const height = 100;
@@ -18,8 +15,8 @@ const color = d3.scaleOrdinal(d3.schemeCategory20);
 
 let container = document.getElementsByClassName("graph-cocycle-container")[0];
 
-for (let i = 0; i < representative.terms.length; i++) {
-    let [coeff, graph] = representative.terms[i];
+function render_term(coeff, graph, num_vertices)
+{
     // Create graph for d3.
     let d3graph = {
         nodes: [],
@@ -29,7 +26,7 @@ for (let i = 0; i < representative.terms.length; i++) {
         let [v, w] = graph[j];
         d3graph.links.push({source: v, target: w});
     }
-    for (let v = 0; v < representative.num_vertices; v++) {
+    for (let v = 0; v < num_vertices; v++) {
         d3graph.nodes.push({name: v.toString(), group: 1});
     }
     // Use cola for the graph layout.
@@ -85,6 +82,15 @@ for (let i = 0; i < representative.terms.length; i++) {
     div.appendChild(svg.node());
     container.appendChild(div);
 }
+
+fetch("{{ json_filename }}").then(response => {
+    response.json().then(representative => {
+        for (let i = 0; i < representative.terms.length; i++) {
+            let [coeff, graph] = representative.terms[i];
+            render_term(coeff, graph, representative.num_vertices);
+        }
+    });
+});
 </script>
 {% endblock %}
 {% block title_plain %}{{ name_plain }}{% endblock %}

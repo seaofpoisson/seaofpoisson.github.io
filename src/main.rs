@@ -69,6 +69,10 @@ fn main() -> std::io::Result<()> {
         let entry = entry?;
         if entry.file_type()?.is_dir() {
             let name = entry.file_name().to_str().unwrap().to_owned();
+            // Copy JSON file.
+            let json_path = "data/graph_cohomology/".to_owned() + &name + "/" + &name + ".json";
+            fs::copy(json_path, "_site/graph_cohomology/".to_owned() + &name + ".json")?;
+            // Read TOML table.
             let toml_path = name.clone() + "/" + &name + ".toml";
             let toml_str = fs::read_to_string("data/graph_cohomology/".to_owned() + &toml_path)?;
             let toml_table = toml_str.parse::<Table>().unwrap();
@@ -81,8 +85,9 @@ fn main() -> std::io::Result<()> {
                 tags => toml_table["tags"],
                 references => toml_table["references"],
                 definition_code_gcaops => fs::read_to_string("data/graph_cohomology/".to_owned() + &name + "/" + &name + ".sage")?,
-                representative_json => fs::read_to_string("data/graph_cohomology/".to_owned() + &name + "/" + &name + ".json")?,
+                json_filename => name.clone() + ".json"
             };
+            // Render template.
             fs::write("_site/graph_cohomology/".to_owned() + &name + ".html", graph_cohomology_class_template.render(ctx).unwrap())?;
             graph_cohomology_classes.push((name, toml_table["name"].as_str().unwrap().to_string()));
         }
