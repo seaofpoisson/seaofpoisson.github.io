@@ -27,6 +27,34 @@ fn main() -> std::io::Result<()> {
     // Copy static files.
     copy_dir_all("static", "_site/static")?;
 
+    // Collect the names of graph cohomology classes.
+    let mut graph_cohomology_classes: Vec<(String, String)> = vec![];
+    for entry in fs::read_dir("data/graph_cohomology/")? {
+        let entry = entry?;
+        if entry.file_type()?.is_dir() {
+            let name = entry.file_name().to_str().unwrap().to_owned();
+            let toml_path = name.clone() + "/" + &name + ".toml";
+            let toml_str = fs::read_to_string("data/graph_cohomology/".to_owned() + &toml_path)?;
+            let toml_table = toml_str.parse::<Table>().unwrap();
+            graph_cohomology_classes.push((name, toml_table["name"].as_str().unwrap().to_string()));
+        }
+    }
+    graph_cohomology_classes.sort();
+
+    // Collect the names of Poisson structures.
+    let mut poisson_structures: Vec<(String, String)> = vec![];
+    for entry in fs::read_dir("data/poisson_structures")? {
+        let entry = entry?;
+        if entry.file_type()?.is_dir() {
+            let name = entry.file_name().to_str().unwrap().to_owned();
+            let toml_path = name.clone() + "/" + &name + ".toml";
+            let toml_str = fs::read_to_string("data/poisson_structures/".to_owned() + &toml_path)?;
+            let toml_table = toml_str.parse::<Table>().unwrap();
+            poisson_structures.push((name, toml_table["name"].as_str().unwrap().to_string()));
+        }
+    }
+    poisson_structures.sort();
+
     // Load basic templates.
     let mut env = Environment::new();
     let base = fs::read_to_string("templates/base.html")?;
@@ -39,7 +67,6 @@ fn main() -> std::io::Result<()> {
     env.add_template("graph_cohomology_class.html", &graph_cohomology_class).unwrap();
 
     // Create Poisson structures.
-    let mut poisson_structures: Vec<(String, String)> = vec![];
     let poisson_template = env.get_template("poisson_structure.html").unwrap();
     for entry in fs::read_dir("data/poisson_structures")? {
         let entry = entry?;
@@ -58,12 +85,10 @@ fn main() -> std::io::Result<()> {
                 definition_code_gcaops => fs::read_to_string("data/poisson_structures/".to_owned() + &name + "/" + &name + ".sage")?,
             };
             fs::write("_site/poisson_structures/".to_owned() + &name + ".html", poisson_template.render(ctx).unwrap())?;
-            poisson_structures.push((name, toml_table["name"].as_str().unwrap().to_string()));
         }
     }
 
     // Create graph cohomology classes.
-    let mut graph_cohomology_classes: Vec<(String, String)> = vec![];
     let graph_cohomology_class_template = env.get_template("graph_cohomology_class.html").unwrap();
     for entry in fs::read_dir("data/graph_cohomology/")? {
         let entry = entry?;
@@ -89,13 +114,10 @@ fn main() -> std::io::Result<()> {
             };
             // Render template.
             fs::write("_site/graph_cohomology/".to_owned() + &name + ".html", graph_cohomology_class_template.render(ctx).unwrap())?;
-            graph_cohomology_classes.push((name, toml_table["name"].as_str().unwrap().to_string()));
         }
     }
 
     // Create index.
-    poisson_structures.sort();
-    graph_cohomology_classes.sort();
     let index_template = env.get_template("index.html").unwrap();
     fs::write("_site/index.html", index_template.render(context!{
         poisson_structures => poisson_structures,
