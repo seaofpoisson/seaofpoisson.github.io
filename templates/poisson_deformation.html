@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% set path_to_root = '..' %}
+{% block title_plain %}{{ poisson_structure_name_plain }} deformation from {{ graph_cohomology_class_name }}{% endblock %}
+{% block title %}<a href="../index.html">Index</a> &raquo; <a href="{{ poisson_structure_slug }}.html">{{ poisson_structure_name }}</a> &raquo; Deformation from {{ graph_cohomology_class_name }}</a>{% endblock %}
+{% block body %}
+<table class="attributes">
+<tr><td>Poisson structure:</td><td><a href="{{ poisson_structure_slug }}.html">{{ poisson_structure_name }}</a></td></tr>
+<tr><td>Graph cohomology class:</td><td><a href="../graph_cohomology/{{ graph_cohomology_class_slug }}.html">{{ graph_cohomology_class_name }}</a></td></tr>
+<tr><td>Tags:</td><td>{% if tags %}{% for tag in tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %}</td></tr>
+<tr><td>References:</td><td>{% if references %}<ul class="attribute">{% for reference in references %}<li>{{ reference }}</li>{% endfor %}</ul>{% else %}-{% endif %}</td></tr>
+</table>
+<h2>Deformation term</h2>
+<table class="attributes">
+<tr><td>Formula:</td><td><pre>{{ definition_formula|default('-') }}</pre></td></tr>
+<tr><td>Code (gcaops):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
+</table>
+{% endblock %}

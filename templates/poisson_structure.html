@@ -13,4 +13,14 @@
 <tr><td>Formula:</td><td>{{ definition_formula|default('-') }}</td></tr>
 <tr><td>Code (gcaops):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
 </table>
+<h2>Deformations</h2>
+{% if deformations %}
+<ul>
+{% for (gcc_slug, gcc_name) in deformations %}
+    <li><a href="{{ slug }}_deformation_from_{{ gcc_slug }}.html">Deformation from {{ gcc_name }}</a></li>
+{% endfor %}
+</ul>
+{% else %}
+No deformations have been stored in the database so far.
+{% endif %}
 {% endblock %}

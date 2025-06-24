@@ -43,6 +43,7 @@ div {
 pre {
     margin-top: 0;
     margin-bottom: 0;
+    white-space: pre-wrap;
 }
 
 .graph-cocycle-container {
