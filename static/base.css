@@ -50,3 +50,7 @@ pre {
     display: grid;
     grid-template-columns: repeat(4, 150px);
 }
+
+h2 {
+    line-height: 1.7em;
+}
