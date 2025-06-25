@@ -1,0 +1,5 @@
+poisson_structure = "generic_poisson_structure_3d"
+graph_cohomology_class = "3_wheel_graph_cohomology_class"
+
+deformation_term_sobj = "Q_gamma3_3d.sobj"
+deformation_term_txt = "Q_gamma3_3d.txt"
