@@ -3,4 +3,4 @@ name_plain = "Generic Poisson structure on R^3"
 alternative_names = ['Arbitrary Poisson structure on $\mathbb{R}^3$']
 tags = []
 references = []
-definition_formula = '$P = u \frac{\partial}{\partial y} \wedge \frac{\partial}{\partial z} + v \frac{\partial}{\partial z} \wedge \frac{\partial}{\partial x} + w \frac{\partial}{\partial x} \wedge \frac{\partial}{\partial y}$ with $u,v,w \in C^\infty(\mathbb{R}^3)$ such that $[P,P]=0$'
+definition_formula = '$P = u \frac{\partial}{\partial y} \wedge \frac{\partial}{\partial z} + v \frac{\partial}{\partial z} \wedge \frac{\partial}{\partial x} + w \frac{\partial}{\partial x} \wedge \frac{\partial}{\partial y}$ with $u,v,w \in C^\infty(\mathbb{R}^3)$ such that $[P,P]=0$.'
