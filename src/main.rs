@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, fs, io, path::Path};
+use std::{collections::{BTreeMap, HashMap}, fs, io, path::Path};
 use toml::Table;
 use minijinja::{Environment, context};
 
@@ -29,6 +29,7 @@ fn main() -> std::io::Result<()> {
 
     // Collect the names of graph cohomology classes.
     let mut graph_cohomology_classes = BTreeMap::new();
+    let mut graph_cohomology_class_to_deformations: HashMap<String, BTreeMap<String, String>> = HashMap::new();
     for entry in fs::read_dir("data/graph_cohomology/")? {
         let entry = entry?;
         if entry.file_type()?.is_dir() {
@@ -36,7 +37,8 @@ fn main() -> std::io::Result<()> {
             let toml_path = name.clone() + "/" + &name + ".toml";
             let toml_str = fs::read_to_string("data/graph_cohomology/".to_owned() + &toml_path)?;
             let toml_table = toml_str.parse::<Table>().unwrap();
-            graph_cohomology_classes.insert(name, toml_table["name"].as_str().unwrap().to_string());
+            graph_cohomology_classes.insert(name.clone(), toml_table["name"].as_str().unwrap().to_string());
+            graph_cohomology_class_to_deformations.insert(name.clone(), BTreeMap::new());
         }
     }
 
@@ -78,13 +80,14 @@ fn main() -> std::io::Result<()> {
             let toml_str = fs::read_to_string(&toml_path)?;
             let toml_table = toml_str.parse::<Table>().unwrap();
             // Create pages for universal deformations of Poisson structures.
-            let mut deformations = Vec::new();
+            let mut deformations = BTreeMap::new();
             for dir in fs::read_dir("data/poisson_structures/".to_owned() + &slug + "/universal_deformations")? {
                 let dir = dir?;
                 if dir.file_type()?.is_dir() {
                     let graph_cohomology_class_slug = dir.file_name().to_str().unwrap().to_owned();
                     let graph_cohomology_class_name = graph_cohomology_classes.get(&graph_cohomology_class_slug).unwrap();
-                    deformations.push((graph_cohomology_class_slug.clone(), graph_cohomology_class_name));
+                    deformations.insert(graph_cohomology_class_slug.clone(), graph_cohomology_class_name.clone());
+                    graph_cohomology_class_to_deformations.get_mut(&graph_cohomology_class_slug).unwrap().insert(slug.to_owned() +  "_deformation_from_" + &graph_cohomology_class_slug, toml_table["name"].as_str().unwrap().to_string());
                     // Read deformation TOML table.
                     let deformation_toml_path = "data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &slug + "_deformation_from_" + &graph_cohomology_class_slug + ".toml";
                     let deformation_toml_str = fs::read_to_string(&deformation_toml_path)?;
@@ -102,7 +105,6 @@ fn main() -> std::io::Result<()> {
                     fs::write("_site/poisson_structures/".to_owned() + &slug + "_deformation_from_" + &graph_cohomology_class_slug + ".html", poisson_deformation_template.render(ctx).unwrap())?;
                 }
             }
-            deformations.sort();
             // Create Poisson structure page.
             let ctx = context!{
                 slug => slug,
@@ -113,7 +115,7 @@ fn main() -> std::io::Result<()> {
                 references => toml_table["references"],
                 definition_formula => toml_table["definition_formula"],
                 definition_code_gcaops => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/" + &slug + ".sage")?,
-                deformations => deformations,
+                deformations => deformations.iter().collect::<Vec<(&String, &String)>>(),
             };
             fs::write("_site/poisson_structures/".to_owned() + &slug + ".html", poisson_template.render(ctx).unwrap())?;
         }
@@ -142,7 +144,8 @@ fn main() -> std::io::Result<()> {
                 tags => toml_table["tags"],
                 references => toml_table["references"],
                 definition_code_gcaops => fs::read_to_string("data/graph_cohomology/".to_owned() + &slug + "/" + &slug + ".sage")?,
-                json_filename => slug.clone() + ".json"
+                json_filename => slug.clone() + ".json",
+                deformations => graph_cohomology_class_to_deformations[&slug].iter().collect::<Vec<(&String, &String)>>(),
             };
             fs::write("_site/graph_cohomology/".to_owned() + &slug + ".html", graph_cohomology_class_template.render(ctx).unwrap())?;
         }
