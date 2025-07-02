@@ -1,0 +1,5 @@
+poisson_structure = "generic_poisson_structure_2d"
+graph_cohomology_class = "[3_wheel,5_wheel]_graph_cohomology_class"
+
+deformation_term_sobj = "Q_gamma3_gamma5_2d.sobj"
+deformation_term_txt = "Q_gamma3_gamma5_2d.txt"
