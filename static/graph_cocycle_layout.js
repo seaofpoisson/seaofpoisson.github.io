@@ -2,6 +2,14 @@ const width = 100;
 const height = 100;
 const color = d3.scaleOrdinal(d3.schemeCategory20);
 
+function render_graph_cocycle(container, cocycle)
+{
+    for (let i = 0; i < cocycle.terms.length; i++) {
+        let [coeff, graph] = cocycle.terms[i];
+        render_graph_cocycle_term(container, coeff, graph, cocycle.num_vertices);
+    }
+}
+
 function render_graph_cocycle_term(container, coeff, graph, num_vertices)
 {
     // Create graph for d3.

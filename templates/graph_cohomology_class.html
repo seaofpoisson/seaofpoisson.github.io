@@ -13,10 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let container = document.getElementsByClassName("graph-cocycle-container")[0];
     fetch("{{ json_filename }}").then(response => {
         response.json().then(representative => {
-            for (let i = 0; i < representative.terms.length; i++) {
-                let [coeff, graph] = representative.terms[i];
-                render_graph_cocycle_term(container, coeff, graph, representative.num_vertices);
-            }
+            render_graph_cocycle(container, representative);
         });
     });
 });
