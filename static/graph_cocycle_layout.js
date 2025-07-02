@@ -1,6 +1,7 @@
 const width = 100;
 const height = 100;
 const color = d3.scaleOrdinal(d3.schemeCategory20);
+const node_radius = 5;
 
 function render_graph_cocycle(container, cocycle)
 {
@@ -24,10 +25,25 @@ function render_graph_cocycle_term(container, coeff, graph, num_vertices)
     for (let v = 0; v < num_vertices; v++) {
         d3graph.nodes.push({name: v.toString(), group: 1});
     }
+    // Add dummy nodes for the corners of the bounds.
+    const real_nodes = d3graph.nodes.slice(0);
+    const top_left = {x: 0, y: 0, fixed: true, fixedWeight: 100};
+    const top_left_idx = d3graph.nodes.push(top_left) - 1;
+    const bottom_right = {x: width, y: height, fixed: true, fixedWeight: 100};
+    const bottom_right_idx = d3graph.nodes.push(bottom_right) - 1;
+    // Add constraints to stay inside the bounds.
+    let constraints = [];
+    for (let i = 0; i < real_nodes.length; i++) {
+        constraints.push({ axis: 'x', type: 'separation', left: top_left_idx, right: i, gap: node_radius });
+        constraints.push({ axis: 'y', type: 'separation', left: top_left_idx, right: i, gap: node_radius });
+        constraints.push({ axis: 'x', type: 'separation', left: i, right: bottom_right_idx, gap: node_radius });
+        constraints.push({ axis: 'y', type: 'separation', left: i, right: bottom_right_idx, gap: node_radius });
+    }
     // Use cola for the graph layout.
     const d3cola = cola.d3adaptor(d3).size([width, height]);
     d3cola.nodes(d3graph.nodes)
         .links(d3graph.links)
+        .constraints(constraints)
         .avoidOverlaps(true)
         .jaccardLinkLengths(30,0.7)
         .start(30);
@@ -43,10 +59,10 @@ function render_graph_cocycle_term(container, coeff, graph, num_vertices)
         .style("stroke", "white")
         .style("stroke-width", "2");
     let node = svg.selectAll(".node")
-        .data(d3graph.nodes)
+        .data(real_nodes)
         .enter().append("circle")
         .attr("class", "node")
-        .attr("r", 5)
+        .attr("r", node_radius)
         .style("fill", "white")
         .call(d3cola.drag);
     node.append("title")
@@ -61,7 +77,7 @@ function render_graph_cocycle_term(container, coeff, graph, num_vertices)
     });
     // Put the graph and its coefficient in a div.
     let div = document.createElement("div");
-    div.style.lineHeight = "100px";
+    div.style.lineHeight = height + "px";
     const has_minus = coeff[0] === "-";
     let coeff_latex = "";
     if (coeff.indexOf("/") === -1) {
