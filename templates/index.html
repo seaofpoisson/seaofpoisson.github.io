@@ -2,18 +2,19 @@
 {% block title_plain %}Index{% endblock %}
 {% block title %}Index{% endblock %}
 {% block body %}
-Families of Poisson structures:
+<p>These are all the Poisson structures and graph cohomology classes currently in the database:</p>
+<h4>Families of Poisson structures</h4>
 <ul class="index">
     <li><a href="">Nambu–Poisson structures on $\mathbb{R}^n$</a></li>
     <li><a href="">Quadratic Poisson structures on $\mathbb{R}^n$</a></li>
 </ul>
-Poisson structures:
+<h4>Poisson structures</h4>
 <ul class="index">
 {% for slug, name in poisson_structures %}
     <li><a href="poisson_structures/{{ slug }}.html">{{ name }}</a></li>
 {% endfor %}
 </ul>
-Graph cohomology classes (which act on Poisson structures):
+<h4>Graph cohomology classes (that act on Poisson structures)</h4>
 <ul class="index">
 {% for slug, name in graph_cohomology_classes %}
     <li><a href="graph_cohomology/{{ slug }}.html">{{ name }}</a></li>
