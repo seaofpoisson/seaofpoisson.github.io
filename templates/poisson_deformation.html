@@ -9,9 +9,22 @@
 <tr><td>Tags:</td><td>{% if tags %}{% for tag in tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %}</td></tr>
 <tr><td>References:</td><td>{% if references %}<ul class="attribute">{% for reference in references %}<li>{{ reference }}</li>{% endfor %}</ul>{% else %}-{% endif %}</td></tr>
 </table>
-<h2>Deformation term</h2>
+<h2>Bi-vector field deformation term $Q$ with $[P,Q] = 0$</h2>
 <table class="attributes">
-<tr><td>Formula:</td><td><pre>{{ definition_formula|default('-') }}</pre></td></tr>
+<tr><td>Formula for $Q$:</td><td><pre>{{ definition_formula|default('-') }}</pre></td></tr>
+<tr><td>Is a Poisson 2-coboundary:</td><td>{% if is_known_coboundary %}Yes, a vector field $X$ such that $Q=[P,X]$ is given below.{% else %}?{% endif %}</td></tr>
 <tr><td>Code (gcaops):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
 </table>
+{% if is_known_coboundary %}
+<h2>Vector field $X$ such that $Q = [P,X]$</h2>
+<table class="attributes">
+<tr><td>Formula for $X$:</td><td><pre>{{ vector_field_potential_formula }}</pre></td></tr>
+</table>
+{% endif %}
+{% if hamiltonian_2d_formula %}
+<h2>Hamiltonian function $H$ such that $X = [\xi_1\xi_2, H]$</h2>
+<table class="attributes">
+<tr><td>Formula for $H$:</td><td><pre>{{ hamiltonian_2d_formula }}</pre></td></tr>
+</table>
+{% endif %}
 {% endblock %}

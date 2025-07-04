@@ -1,0 +1,1 @@
+8*u_y^2*u_xx - 16*u_x*u_y*u_xy + 8*u_x^2*u_yy

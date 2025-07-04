@@ -1,0 +1,1 @@
+(-16*u_y*u_xy^2 + 16*u_y*u_xx*u_yy + 8*u_y^2*u_xxy - 16*u_x*u_y*u_xyy + 8*u_x^2*u_yyy)*xi1 + (16*u_x*u_xy^2 - 16*u_x*u_xx*u_yy - 8*u_y^2*u_xxx + 16*u_x*u_y*u_xxy - 8*u_x^2*u_xyy)*xi2

@@ -1,6 +1,6 @@
 use std::{collections::{BTreeMap, HashMap}, fs, io, path::Path};
 use toml::Table;
-use minijinja::{Environment, context};
+use minijinja::{context, Environment};
 
 fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> io::Result<()> {
     fs::create_dir_all(&dst)?;
@@ -91,7 +91,24 @@ fn main() -> std::io::Result<()> {
                     // Read deformation TOML table.
                     let deformation_toml_path = "data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &slug + "_deformation_from_" + &graph_cohomology_class_slug + ".toml";
                     let deformation_toml_str = fs::read_to_string(&deformation_toml_path)?;
-                    let deformation_toml_table = deformation_toml_str.parse::<Table>().unwrap();                    
+                    let deformation_toml_table = deformation_toml_str.parse::<Table>().unwrap();
+                    // Check for coboundary data.
+                    let is_known_coboundary: bool;
+                    let vector_field_potential_formula: String;
+                    if deformation_toml_table.contains_key("vector_field_potential") {
+                        is_known_coboundary = true;
+                        vector_field_potential_formula = fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["vector_field_potential"]["txt"].as_str().unwrap().to_string())?;
+                    } else {
+                        is_known_coboundary = false;
+                        vector_field_potential_formula = String::new();
+                    }
+                    // Check for Hamiltonian data (specific to 2D)
+                    let hamiltonian_2d_formula: String;
+                    if deformation_toml_table.contains_key("hamiltonian_2d") {
+                        hamiltonian_2d_formula = fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + deformation_toml_table["hamiltonian_2d"]["txt"].as_str().unwrap())?;
+                    } else {
+                        hamiltonian_2d_formula = String::new();
+                    }
                     // Create Poisson deformation page.
                     let ctx = context!{
                         poisson_structure_slug => &slug,
@@ -99,8 +116,11 @@ fn main() -> std::io::Result<()> {
                         poisson_structure_name_plain => toml_table["name_plain"],
                         graph_cohomology_class_slug => &graph_cohomology_class_slug,
                         graph_cohomology_class_name => &graph_cohomology_class_name,
-                        definition_code_gcaops => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &slug + "_deformation_from_" + &graph_cohomology_class_slug + ".sage")?,
-                        definition_formula => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term_txt"].as_str().unwrap().to_string())?,
+                        definition_code_gcaops => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term"]["code"].as_str().unwrap().to_string())?,
+                        definition_formula => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term"]["txt"].as_str().unwrap().to_string())?,
+                        is_known_coboundary => is_known_coboundary,
+                        vector_field_potential_formula => vector_field_potential_formula,
+                        hamiltonian_2d_formula => hamiltonian_2d_formula
                     };
                     fs::write("_site/poisson_structures/".to_owned() + &slug + "_deformation_from_" + &graph_cohomology_class_slug + ".html", poisson_deformation_template.render(ctx).unwrap())?;
                 }

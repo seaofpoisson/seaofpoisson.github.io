@@ -1,5 +1,13 @@
 poisson_structure = "generic_poisson_structure_2d"
 graph_cohomology_class = "3_wheel_graph_cohomology_class"
 
-deformation_term_sobj = "Q_gamma3_2d.sobj"
-deformation_term_txt = "Q_gamma3_2d.txt"
+[deformation_term]
+code = "Q_gamma3_2d.sage"
+sobj = "Q_gamma3_2d.sobj"
+txt = "Q_gamma3_2d.txt"
+
+[vector_field_potential]
+txt = "X_gamma3_2d.txt"
+
+[hamiltonian_2d]
+txt = "H_gamma3_2d.txt"
