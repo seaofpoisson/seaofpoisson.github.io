@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from "inline_reference.html" import inline_reference %}
+{% set path_to_root = '..' %}
+{% block title_plain %}References{% endblock %}
+{% block title %}<a href="../index.html">Index</a> &raquo; References{% endblock %}
+{% block body %}
+<ul>
+{% for reference in references %}
+<li>{{ inline_reference(reference) }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

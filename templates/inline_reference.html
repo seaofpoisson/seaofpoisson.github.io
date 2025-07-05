@@ -1,0 +1,10 @@
+{% macro inline_reference(reference) %}
+[{{ reference.key }}]
+{{ reference.author }}. {{ reference.title }}.
+{% if reference.url %}
+<br><a href="{{ reference.url }}">{{ reference.url }}</a>
+{% endif %}
+{% if reference.doi %}
+<br><a href="{{ reference.doi }}">{{ reference.doi }}</a>
+{% endif %}
+{% endmacro %}

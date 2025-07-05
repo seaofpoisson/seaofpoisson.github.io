@@ -61,12 +61,26 @@ fn main() -> std::io::Result<()> {
     env.add_template("base.html", &base).unwrap();
     let index = fs::read_to_string("templates/index.html")?;
     env.add_template("index.html", &index).unwrap();
+    let inline_reference = fs::read_to_string("templates/inline_reference.html")?;
+    env.add_template("inline_reference.html", &inline_reference).unwrap();
+    let references = fs::read_to_string("templates/references.html")?;
+    env.add_template("references.html", &references).unwrap();
     let poisson_structure = fs::read_to_string("templates/poisson_structure.html")?;
     env.add_template("poisson_structure.html", &poisson_structure).unwrap();
     let graph_cohomology_class = fs::read_to_string("templates/graph_cohomology_class.html")?;
     env.add_template("graph_cohomology_class.html", &graph_cohomology_class).unwrap();
     let poisson_deformation = fs::read_to_string("templates/poisson_deformation.html")?;
     env.add_template("poisson_deformation.html", &poisson_deformation).unwrap();
+
+    // Create page for references.
+    let references_template = env.get_template("references.html").unwrap();
+    let references_toml_path = "data/references.toml";
+    let references_toml_str = fs::read_to_string(&references_toml_path)?;
+    let references_toml_table = references_toml_str.parse::<Table>().unwrap();
+    let ctx= context! {
+        references => references_toml_table["references"]
+    };
+    fs::write("_site/references.html", references_template.render(ctx).unwrap())?;
 
     // Create pages for Poisson structures.
     let poisson_template = env.get_template("poisson_structure.html").unwrap();

@@ -1,0 +1,16 @@
+[[references]]
+key = "Kontsevich96"
+type = "article"
+title = "Formality Conjecture"
+author = "Maxim Kontsevich"
+year = "1996"
+url = "https://www.ihes.fr/~maxim/TEXTS/Formality%20conjecture.pdf"
+
+[[references]]
+key = "Kontsevich97"
+type = "article"
+title = "Deformation quantization of Poisson manifolds"
+author = "Maxim Kontsevich"
+year = "1997"
+url = "https://www.ihes.fr/~maxim/TEXTS/DefQuant_final.pdf"
+doi = "http://dx.doi.org/10.1023/B:MATH.0000027508.00421.bf"
