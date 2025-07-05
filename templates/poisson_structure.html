@@ -2,6 +2,17 @@
 {% set path_to_root = '..' %}
 {% block title_plain %}{{ name_plain }}{% endblock %}
 {% block title %}<a href="../index.html">Index</a> &raquo; {{ name }}{% endblock %}
+{% block extra_head %}
+<script src="{{ path_to_root }}/static/code_block.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    toggle_code_block('poisson-code');
+});
+</script>
+{% endblock %}
+{% block extra_body_before %}
+<div class="page-options">Show code: <a href="javascript:toggle_code_block('poisson-code');">[<code>gcaops</code>]</a></div>
+{% endblock %}
 {% block body %}
 <table class="attributes">
 <tr><td>Alternative names:</td><td>{% if alternative_names %}<ul class="attribute">{% for alt_name in alternative_names %}<li>{{ alt_name }}</li>{% endfor %}</ul>{% else %}-{% endif %}</td></tr>
@@ -11,7 +22,7 @@
 <h2>Definition</h2>
 <table class="attributes">
 <tr><td>Formula:</td><td>{{ definition_formula|default('-') }}</td></tr>
-<tr><td>Code (gcaops):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
+<tr id="poisson-code"><td>Code (<code>gcaops</code>):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
 </table>
 <h2>Deformations</h2>
 {% if deformations %}

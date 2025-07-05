@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% set path_to_root = '..' %}
+{% block title_plain %}{{ name_plain }}{% endblock %}
+{% block title %}<a href="{{ path_to_root }}/index.html">Index</a> &raquo; {{ name }}{% endblock %}
 {% block extra_head %}
 {#
 <script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.js"></script>
@@ -7,9 +9,11 @@
 #}
 <script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/webcola@3.4.0/WebCola/cola.min.js"></script>
+<script src="{{ path_to_root }}/static/code_block.js"></script>
 <script src="{{ path_to_root }}/static/graph_cocycle_layout.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    toggle_code_block('graph-cocycle-code');
     let container = document.getElementsByClassName("graph-cocycle-container")[0];
     fetch("{{ json_filename }}").then(response => {
         response.json().then(representative => {
@@ -19,8 +23,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 {% endblock %}
-{% block title_plain %}{{ name_plain }}{% endblock %}
-{% block title %}<a href="{{ path_to_root }}/index.html">Index</a> &raquo; {{ name }}{% endblock %}
+{% block extra_body_before %}
+<div class="page-options">Show code: <a href="javascript:toggle_code_block('graph-cocycle-code');">[<code>gcaops</code>]</a></div>
+{% endblock %}
 {% block body %}
 <table class="attributes">
 <tr><td>Alternative names:</td><td>{% if alternative_names %}<ul class="attribute">{% for alt_name in alternative_names %}<li>{{ alt_name }}</li>{% endfor %}</ul>{% else %}-{% endif %}</td></tr>
@@ -33,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <table class="attributes">
 <tr><td>Representative:</td><td><div class="graph-cocycle-container"></div></td></tr>
 <tr><td>JSON file:</td><td><a href="{{ json_filename }}"><code>{{ json_filename }}</code></a></td></tr>
-<tr><td>Code (gcaops):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
+<tr id="graph-cocycle-code"><td>Code (<code>gcaops</code>):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
 </table>
 {% if deformations %}
 <h2>Poisson deformations</h2>
