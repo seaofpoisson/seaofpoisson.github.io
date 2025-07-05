@@ -1,4 +1,11 @@
 [[references]]
+key = "Bouisaghouane2017"
+type = "preprint"
+title = "The Kontsevich tetrahedral flow in 2D: a toy model"
+author = "Anass Bouisaghouane"
+url = "https://arxiv.org/abs/1702.06044"
+
+[[references]]
 key = "BuringPhD2022"
 type = "dissertation"
 title = "The action of Kontsevich's graph complex on Poisson structures and star products: an implementation"
