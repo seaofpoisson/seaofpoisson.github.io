@@ -2,9 +2,9 @@
 <a name="{{ reference.key }}" href="#{{ reference.key }}">[{{ reference.key }}]</a>
 {{ reference.author }}. {{ reference.title }}.
 {% if reference.url %}
-<br><a href="{{ reference.url }}">{{ reference.url }}</a>
+<br><a href="{{ reference.url }}" target="_blank">{{ reference.url }}</a>
 {% endif %}
 {% if reference.doi %}
-<br><a href="{{ reference.doi }}">{{ reference.doi }}</a>
+<br><a href="{{ reference.doi }}" target="_blank">{{ reference.doi }}</a>
 {% endif %}
 {% endmacro %}

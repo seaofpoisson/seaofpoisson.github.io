@@ -1,4 +1,13 @@
 [[references]]
+key = "BuringPhD2022"
+type = "dissertation"
+title = "The action of Kontsevich's graph complex on Poisson structures and star products: an implementation"
+author = "Ricardo Buring"
+year = "2022"
+doi = "https://doi.org/10.25358/openscience-9274"
+url = "https://www.rburing.nl/gcaops/gcaops-dissertation-rburing.pdf"
+
+[[references]]
 key = "Kontsevich96"
 type = "article"
 title = "Formality Conjecture"

@@ -1,6 +1,10 @@
 poisson_structure = "generic_poisson_structure_2d"
 graph_cohomology_class = "[3_wheel,5_wheel]_graph_cohomology_class"
 
+[[references]]
+key = "BuringPhD2022"
+specifically = "chapter I.6.5"
+
 [deformation_term]
 code = "Q_gamma3_gamma5_2d.sage"
 sobj = "Q_gamma3_gamma5_2d.sobj"
