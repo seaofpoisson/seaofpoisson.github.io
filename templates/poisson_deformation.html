@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <table class="attributes">
 <tr><td>Formula for $Q$:</td><td><pre>{{ definition_formula|default('-') }}</pre></td></tr>
 <tr><td>Is a Poisson 2-coboundary:</td><td>{% if is_known_coboundary %}Yes, a vector field $X$ such that $Q=[P,X]$ is given below.{% else %}?{% endif %}</td></tr>
-<tr id="poisson-deformation-code"><td>Code (<code>gcaops</code>):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
+<tr id="poisson-deformation-code"><td>Code (<code>gcaops</code>):</td><td><pre><code class="language-python">{{ definition_code_gcaops|default('-') }}</code></pre></td></tr>
 </table>
 {% if is_known_coboundary %}
 <h2>Vector field $X$ such that $Q = [P,X]$</h2>

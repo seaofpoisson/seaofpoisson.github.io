@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <table class="attributes">
 <tr><td>Representative:</td><td><div class="graph-cocycle-container"></div></td></tr>
 <tr><td>JSON file:</td><td><a href="{{ json_filename }}"><code>{{ json_filename }}</code></a></td></tr>
-<tr id="graph-cocycle-code"><td>Code (<code>gcaops</code>):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
+<tr id="graph-cocycle-code"><td>Code (<code>gcaops</code>):</td><td><pre><code class="language-python">{{ definition_code_gcaops|default('-') }}</code></pre></td></tr>
 </table>
 {% if deformations %}
 <h2>Poisson deformations</h2>

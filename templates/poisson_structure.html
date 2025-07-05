@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <h2>Definition</h2>
 <table class="attributes">
 <tr><td>Formula:</td><td>{{ definition_formula|default('-') }}</td></tr>
-<tr id="poisson-code"><td>Code (<code>gcaops</code>):</td><td><pre>{{ definition_code_gcaops|default('-') }}</pre></td></tr>
+<tr id="poisson-code"><td>Code (<code>gcaops</code>):</td><td><pre><code class="language-python">{{ definition_code_gcaops|default('-') }}</code></pre></td></tr>
 </table>
 <h2>Deformations</h2>
 {% if deformations %}
