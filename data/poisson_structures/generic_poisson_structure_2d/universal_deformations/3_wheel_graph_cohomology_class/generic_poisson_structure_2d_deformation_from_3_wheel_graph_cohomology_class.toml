@@ -1,6 +1,11 @@
 poisson_structure = "generic_poisson_structure_2d"
 graph_cohomology_class = "3_wheel_graph_cohomology_class"
 
+[[references]]
+key = "Kontsevich96"
+specifically = "section 5.3"
+comment = "Claim that $Q = [P,X]$."
+
 [deformation_term]
 code = "Q_gamma3_2d.sage"
 sobj = "Q_gamma3_2d.sobj"

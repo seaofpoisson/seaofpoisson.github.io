@@ -18,7 +18,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <tr><td>Poisson structure:</td><td><a href="{{ poisson_structure_slug }}.html">{{ poisson_structure_name }}</td></tr>
 <tr><td>Graph cohomology class:</td><td><a href="../graph_cohomology/{{ graph_cohomology_class_slug }}.html">{{ graph_cohomology_class_name }}</a></td></tr>
 <tr><td>Tags:</td><td>{% if tags %}{% for tag in tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %}</td></tr>
-<tr><td>References:</td><td>{% if references %}<ul class="attribute">{% for reference in references %}<li>{{ reference }}</li>{% endfor %}</ul>{% else %}-{% endif %}</td></tr>
+<tr><td>References:</td><td>{% if references %}
+<ul class="attribute">
+{% for reference in references %}
+<li>[<a href="{{ path_to_root }}/references.html#{{ reference.key }}">{{ reference.key }}</a>{% if reference.specifically %}, {{ reference.specifically }}{% endif %}]{% if reference.comment %}: {{ reference.comment }}{% endif %}</li>
+{% endfor %}
+</ul>
+{% else %}-{% endif %}</td></tr>
 </table>
 <h2>Bi-vector field deformation term $Q$ with $[P,Q] = 0$</h2>
 <table class="attributes">

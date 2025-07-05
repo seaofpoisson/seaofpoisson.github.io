@@ -106,6 +106,8 @@ fn main() -> std::io::Result<()> {
                     let deformation_toml_path = "data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &slug + "_deformation_from_" + &graph_cohomology_class_slug + ".toml";
                     let deformation_toml_str = fs::read_to_string(&deformation_toml_path)?;
                     let deformation_toml_table = deformation_toml_str.parse::<Table>().unwrap();
+                    // Check for references.
+                    let references = deformation_toml_table.get("references");
                     // Check for coboundary data.
                     let is_known_coboundary: bool;
                     let vector_field_potential_formula: String;
@@ -130,6 +132,7 @@ fn main() -> std::io::Result<()> {
                         poisson_structure_name_plain => toml_table["name_plain"],
                         graph_cohomology_class_slug => &graph_cohomology_class_slug,
                         graph_cohomology_class_name => &graph_cohomology_class_name,
+                        references => references,
                         definition_code_gcaops => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term"]["code"].as_str().unwrap().to_string())?,
                         definition_formula => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term"]["txt"].as_str().unwrap().to_string())?,
                         is_known_coboundary => is_known_coboundary,

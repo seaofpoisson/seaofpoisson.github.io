@@ -1,5 +1,5 @@
 {% macro inline_reference(reference) %}
-[{{ reference.key }}]
+<a name="{{ reference.key }}" href="#{{ reference.key }}">[{{ reference.key }}]</a>
 {{ reference.author }}. {{ reference.title }}.
 {% if reference.url %}
 <br><a href="{{ reference.url }}">{{ reference.url }}</a>
