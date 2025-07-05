@@ -7,11 +7,18 @@ specifically = "section 5.3"
 comment = "Claim that $Q = [P,X]$."
 
 [[references]]
+key = "BouisaghouaneBuringKiselev2016"
+specifically = "Remark 13"
+comment = "Expression for $X$ in terms of directed graphs."
+
+[[references]]
 key = "Bouisaghouane2017"
+comment = 'Expressions for $Q, X$, and $H$ such that $X = [\xi_1\xi_2, H]$. Also $X$ and $H$ in terms of directed graphs.'
 
 [[references]]
 key = "BuringPhD2022"
 specifically = "chapter I.6.1"
+comment = "Code to compute $Q, X$ and $H$. Also $H$ in terms of directed graphs."
 
 [deformation_term]
 code = "Q_gamma3_2d.sage"

@@ -6,6 +6,15 @@ author = "Anass Bouisaghouane"
 url = "https://arxiv.org/abs/1702.06044"
 
 [[references]]
+key = "BouisaghouaneBuringKiselev2016"
+type = "article"
+title = "The Kontsevich tetrahedral flow revisited"
+author = "Anass Bouisaghouane, Ricardo Buring, Arthemy V. Kiselev"
+year = "2016"
+doi = "https://doi.org/10.1016/j.geomphys.2017.04.014"
+url = "https://arxiv.org/abs/1608.01710"
+
+[[references]]
 key = "BuringPhD2022"
 type = "dissertation"
 title = "The action of Kontsevich's graph complex on Poisson structures and star products: an implementation"
