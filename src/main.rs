@@ -131,12 +131,30 @@ fn main() -> std::io::Result<()> {
                         is_known_coboundary = false;
                         vector_field_potential_formula = String::new();
                     }
-                    // Check for Hamiltonian data (specific to 2D)
+                    // Check for Hamiltonian data (specific to 2D).
                     let hamiltonian_2d_formula: String;
                     if deformation_toml_table.contains_key("hamiltonian_2d") {
                         hamiltonian_2d_formula = fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + deformation_toml_table["hamiltonian_2d"]["txt"].as_str().unwrap())?;
                     } else {
                         hamiltonian_2d_formula = String::new();
+                    }
+                    // Check for gcaops code.
+                    let definition_code_path = "data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term"]["code"].as_str().unwrap().to_string();
+                    let definition_code_gcaops: String;
+                    if std::fs::exists(&definition_code_path)? {
+                        definition_code_gcaops = fs::read_to_string(definition_code_path)?;
+                    } else {
+                        eprintln!("No such file: {}", definition_code_path);
+                        definition_code_gcaops = "TODO".to_owned();
+                    }
+                    // Check for formula.
+                    let definition_formula_path = "data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term"]["txt"].as_str().unwrap().to_string();
+                    let definition_formula: String;
+                    if std::fs::exists(&definition_formula_path)? {
+                        definition_formula = fs::read_to_string(definition_formula_path)?;
+                    } else {
+                        eprintln!("No such file: {}", definition_formula_path);
+                        definition_formula = "TODO".to_owned();
                     }
                     // Create Poisson deformation page.
                     let ctx = context!{
@@ -146,8 +164,8 @@ fn main() -> std::io::Result<()> {
                         graph_cohomology_class_slug => &graph_cohomology_class_slug,
                         graph_cohomology_class_name => &graph_cohomology_class_name,
                         references => references,
-                        definition_code_gcaops => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term"]["code"].as_str().unwrap().to_string())?,
-                        definition_formula => fs::read_to_string("data/poisson_structures/".to_owned() + &slug + "/universal_deformations/" + &graph_cohomology_class_slug + "/" + &deformation_toml_table["deformation_term"]["txt"].as_str().unwrap().to_string())?,
+                        definition_code_gcaops => definition_code_gcaops,
+                        definition_formula => definition_formula,
                         is_known_coboundary => is_known_coboundary,
                         vector_field_potential_formula => vector_field_potential_formula,
                         hamiltonian_2d_formula => hamiltonian_2d_formula
