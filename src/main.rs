@@ -1,8 +1,9 @@
-use std::{collections::{BTreeMap, HashMap}, fs, io, path::Path};
+use std::{collections::{BTreeMap, HashMap}, io, path::{Path, PathBuf}};
+use fs_err as fs;
 use toml::Table;
 use minijinja::{context, Environment};
 
-fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> io::Result<()> {
+fn copy_dir_all(src: impl AsRef<Path> + Into<PathBuf>, dst: impl AsRef<Path> + Into<PathBuf>) -> io::Result<()> {
     fs::create_dir_all(&dst)?;
     for entry in fs::read_dir(src)? {
         let entry = entry?;
@@ -17,7 +18,7 @@ fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> io::Result<()> 
 
 fn main() -> std::io::Result<()> {
     // Create new _site directory.
-    if fs::exists("_site")? {
+    if std::fs::exists("_site")? {
         fs::remove_dir_all("_site")?;
     }
     fs::create_dir("_site")?;
