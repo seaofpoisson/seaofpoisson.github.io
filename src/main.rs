@@ -95,9 +95,21 @@ fn main() -> std::io::Result<()> {
             let toml_table = toml_str.parse::<Table>().unwrap();
             // Create pages for universal deformations of Poisson structures.
             let mut deformations = BTreeMap::new();
-            for dir in fs::read_dir("data/poisson_structures/".to_owned() + &slug + "/universal_deformations")? {
-                let dir = dir?;
-                if dir.file_type()?.is_dir() {
+            if let Ok(paths) = fs::read_dir("data/poisson_structures/".to_owned() + &slug + "/universal_deformations") {
+                for path in paths {
+                    // TODO: Clean up this inane error handling.
+                    if let Ok(ref path2) = path {
+                        if let Ok(file_type) = path2.file_type() {
+                            if !file_type.is_dir() {
+                                continue;
+                            }
+                        } else {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
+                    let dir = path?;
                     let graph_cohomology_class_slug = dir.file_name().to_str().unwrap().to_owned();
                     let graph_cohomology_class_name = graph_cohomology_classes.get(&graph_cohomology_class_slug).unwrap();
                     deformations.insert(graph_cohomology_class_slug.clone(), graph_cohomology_class_name.clone());
