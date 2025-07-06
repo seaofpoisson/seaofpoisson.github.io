@@ -3,11 +3,13 @@
 {% block title %}Index{% endblock %}
 {% block body %}
 <p>These are all the Poisson structures and graph cohomology classes (from the known <a href="references.html">references</a>) currently in the database:</p>
+{#
 <h4>Families of Poisson structures</h4>
 <ul class="index">
     <li><a href="">Nambu–Poisson structures on $\mathbb{R}^n$</a></li>
     <li><a href="">Quadratic Poisson structures on $\mathbb{R}^n$</a></li>
 </ul>
+#}
 <h4>Poisson structures</h4>
 <ul class="index">
 {% for slug, name in poisson_structures %}
