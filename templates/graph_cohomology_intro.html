@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% set path_to_root = '..' %}
+{% block title_plain %}Graph cohomology (intro){% endblock %}
+{% block title %}<a href="../index.html">Index</a> &raquo; Graph cohomology (intro){% endblock %}
+{% block extra_head %}
+{#
+<script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/webcola@3.4.0/WebCola/cola.js"></script>
+#}
+<script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/webcola@3.4.0/WebCola/cola.min.js"></script>
+<script src="{{ path_to_root }}/static/graph_cocycle_layout.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let container = document.getElementsByClassName("graph-cocycle-container")[0];
+    fetch("graph_cohomology/5_wheel_graph_cohomology_class.json").then(response => {
+        response.json().then(representative => {
+            container.innerHTML = "";
+            render_graph_cocycle(container, representative);
+        });
+    });
+});
+</script>
+{% endblock %}
+{% block body %}
+
+<h3>Motivation (sketch)</h3>
+
+<p>The Schouten bracket is a natural binary operation on multi-vector fields, extended from the Lie bracket of vector fields.</p>
+<p>One can study the algebra of multi-linear multi-differential operations on multi-vector fields, and <em>insertion</em> of operations into one another.</p>
+<p>An insertion takes an $m$-ary operation and inserts its output into an input of an $n$-ary operation, to produce a $(n+m-1)$-ary operation.</p>
+<p>Considering an abstract version of this (that maps to the concrete one), one is led to...</p>
+
+<h3>The graph complex (sketch)</h3>
+
+<p>The graph complex introduced by Kontsevich is a differential graded Lie algebra with a basis consisting of isomorphism classes of undirected graphs. Here's an example of an element:</p>
+
+<div class="graph-cocycle-container">Loading...</div>
+
+<p>The Lie bracket of two graphs is the graded commutator with respect to an insertion operation: insert the right graph into a vertex of the left graph and again re-attach the incoming edges in all possible ways (sum over all possibilities).</p>
+
+<p>The graph differential can be defined as the taking the bracket with the stick graph: $d(\gamma) = [\bullet\!\!\!-\!\!\!\bullet, \gamma]$.</p>
+
+<h3>Graph cohomology</h3>
+
+<p>It is known (from a combination of results by T. Willwacher and F. Brown) that cohomology classes $[\gamma_n]$ marked by $n$-wheels for odd $n \geqslant 3$ generate a free Lie algebra inside the degree-0 graph cohomology, and the Deligne–Drinfeld conjecture states that this is all there is.</p>
+
+<h3>Graph complex action on Poisson structures</h3>
+
+<p>From each graph cocycle $\gamma$ on $n$ vertices and $2n-2$ edges one obtains an $n$-ary operation $\operatorname{Op}(\gamma)$ on multi-vector fields.</p>
+
+<p>For an arbitrary Poisson bi-vector field $P$ on $\mathbb{R}^d$ the formula $Q_\gamma(P) = \operatorname{Op}(\gamma)(P^{\otimes n})$ then defines a Poisson $2$-cocycle: $[P, Q_\gamma(P)] = 0$.</p>
+
+<p>If $\gamma$ is a graph coboundary, then $Q_\gamma(P) = \operatorname{Op}(\gamma)(P^{\otimes n})$ is a Poisson coboundary.</p>
+
+<p><b>Note:</b> By construction, <em>nonzero</em> graph cohomology classes $\gamma$ act in such a way that $Q_\gamma(P)$ is <em>not universally</em> a Poisson $2$-coboundary.</p>
+
+<p>However, it is a long open problem to actually find a non-trivial example of this action.</p>
+
+<p><b>Open problem</b> (Kontsevich, 1996): Find an example of a Poisson structure $P$ and a graph cocycle $\gamma$ such that $Q_\gamma(P)$ is not a Poisson $2$-coboundary, or prove that no such pair exists.
+</p>
+
+<p>This website is dedicated to this open problem.</p>
+
+{% endblock %}

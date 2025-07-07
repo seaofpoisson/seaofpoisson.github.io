@@ -74,6 +74,8 @@ fn main() -> std::io::Result<()> {
     env.add_template("poisson_deformation.html", &poisson_deformation).unwrap();
     let poisson_structures_intro = fs::read_to_string("templates/poisson_structures_intro.html")?;
     env.add_template("poisson_structures_intro.html", &poisson_structures_intro).unwrap();
+    let graph_cohomology_intro = fs::read_to_string("templates/graph_cohomology_intro.html")?;
+    env.add_template("graph_cohomology_intro.html", &graph_cohomology_intro).unwrap();
 
     // Create page for references.
     let references_template = env.get_template("references.html").unwrap();
@@ -88,6 +90,10 @@ fn main() -> std::io::Result<()> {
     // Create Poisson structures intro page.
     let poisson_intro_template = env.get_template("poisson_structures_intro.html").unwrap();
     fs::write("_site/poisson_structures_intro.html", poisson_intro_template.render(context!{}).unwrap())?;
+
+    // Create graph cohomology intro page.
+    let graph_cohomology_intro_template = env.get_template("graph_cohomology_intro.html").unwrap();
+    fs::write("_site/graph_cohomology_intro.html", graph_cohomology_intro_template.render(context!{}).unwrap())?;
 
     // Create pages for Poisson structures.
     let poisson_template = env.get_template("poisson_structure.html").unwrap();
