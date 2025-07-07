@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <tr><td>References:</td><td>{% if references %}
 <ul class="attribute">
 {% for reference in references %}
-<li>[<a href="{{ path_to_root }}/references.html#{{ reference.key }}">{{ reference.key }}</a>{% if reference.specifically %}, {{ reference.specifically }}{% endif %}]{% if reference.comment %}: {{ reference.comment }}{% endif %}</li>
+<li>[<a href="{{ path_to_root }}/references.html#{{ reference.key }}"><code>{{ reference.key }}</code></a>{% if reference.specifically %}, {{ reference.specifically }}{% endif %}]{% if reference.comment %}: {{ reference.comment }}{% endif %}</li>
 {% endfor %}
 </ul>
 {% else %}-{% endif %}</td></tr>
