@@ -13,7 +13,7 @@
 <script src="{{ path_to_root }}/static/graph_cocycle_layout.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    toggle_code_block('graph-cocycle-code');
+    show_or_hide_code_block('graph-cocycle-code');
     let container = document.getElementsByClassName("graph-cocycle-container")[0];
     fetch("{{ json_filename }}").then(response => {
         response.json().then(representative => {
