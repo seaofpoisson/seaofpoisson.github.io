@@ -62,3 +62,8 @@ h2 {
     background: #1c1b1b;
     padding: .5em 1em .5em 1em;
 }
+
+#footer {
+    border-top: 1px solid #FAF9F6;
+    padding-top: .5em;
+}

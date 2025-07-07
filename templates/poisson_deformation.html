@@ -45,3 +45,6 @@ document.addEventListener("DOMContentLoaded", function() {
 </table>
 {% endif %}
 {% endblock %}
+{% block footer %}
+<p id="footer">This page's source on GitHub: <a href="https://github.com/seaofpoisson/seaofpoisson.github.io/blob/master/{{ source_file_path }}" target="_blank"><code>{{ source_file_name }}</code></a></p>
+{% endblock %}
