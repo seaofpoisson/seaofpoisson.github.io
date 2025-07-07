@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% set path_to_root = '.' %}
+{% block title_plain %}Poisson structures (intro){% endblock %}
+{% block title %}<a href="{{ path_to_root }}/index.html">Index</a> &raquo; Poisson structures (intro){% endblock %}
+{% block body %}
+
+<h3>Hamilton's equations</h3>
+
+<p>Hamilton's equations in canonical coordinates for a time-independent hamiltonian $H: \mathbb{R}^2 \to \mathbb{R}$ read as follows:</p>
+
+<p>$\left\{\begin{aligned}\dot{q} &= +\frac{\partial H}{\partial p}\\\dot{p} &= -\frac{\partial H}{\partial q}\end{aligned}\right.$</p>
+
+<p>where $(q,p)$ are coordinates on $\mathbb{R}^2$, and dots denote derivatives with respect to time.</p>
+
+<h3>Classical Poisson bracket</h3>
+
+<p>From the chain rule for derivatives, it follows that the time evolution of a function $F: \mathbb{R}^2 \to \mathbb{R}$ is:</p>
+$\begin{aligned}
+	\dot{F} &= \frac{\partial F}{\partial q}\cdot \dot{q} + \frac{\partial F}{\partial p} \cdot \dot{p}
+	&= \qquad
+	\frac{\partial F}{\partial q} \cdot \frac{\partial H}{\partial p} - \frac{\partial F}{\partial p} \cdot \frac{\partial H}{\partial q}  \eqqcolon \{F, H\},
+\end{aligned}$
+<p>this is called the <em>Poisson bracket</em> $\{F,H\}$ of $F$ and $H$.</p>
+
+<p>The <em>Jacobi identity</em> holds: $\{\{F,G\},H\} + \{\{G,H\},F\} + \{\{H,F\},G\} = 0$.</p>
+
+<h3>More general Poisson brackets</h3>
+
+<p>More generally, a <em>Poisson bracket</em> on $M = \mathbb{R}^d$ is a bracket $\{-,-\}$ on the algebra of smooth real-valued functions $C^\infty(M)$ such that:
+<ul>
+<li>Bi-derivation: $\{f,gh\} = \{f,g\}h + g\{f, h\}$,</li>
+<li>(Bi-)linearity: $\{f,ag+bh\} = a\{f,g\} + b\{f,h\}$ for $a,b \in \mathbb{R}$,</li>
+<li>Skew-symmetry: $\{f,g\} = -\{g,f\}$,</li>
+<li>Jacobi identity: $\{\{f,g\},h\} + \{\{g,h\},f\} + \{\{h,f\},g\} = 0$.</li>
+</ul>
+</p>
+
+<h3>Structure coefficients</h3>
+
+<p>The <em>structure coefficients</em> of a Poisson bracket in coordinates $x^1,\ldots,x^d$ are the functions $P^{ij} \coloneqq \{x^i, x^j\} \in C^\infty(M)$. They satisfy:
+<ul>
+<li>$P^{ij} = -P^{ji}$ for all $i,j=1,\ldots,d$ (skew-symmetry) and </li>
+<li>${\sum}_{s=1}^d (P^{si} \partial_s P^{jk} + P^{sj} \partial_s P^{ki} + P^{sk}\partial_s P^{ij}) = 0$ for all $i,j,k=1,\ldots,d$ (Jacobi identity).</li>
+</ul>
+</p>
+
+<p>Conversely, a collection of such structure coefficients $(P^{ij})$ defines a Poisson bracket on $C^\infty(M)$ by $\{f,g\} = \sum_{i,j=1}^d P^{ij} \cdot \partial_i(f\,) \cdot \partial_j(g\,)$, where $\partial_i \coloneqq \frac{\partial}{\partial x^i}$.</p>
+
+<p>The tensor $P = \sum_{i,j=1}^d P^{ij} \partial_i \wedge \partial_j$ is a bi-vector field, and the Jacobi identity is equivalent to $[P,P] = 0$ where the bracket is the Schouten bracket (a natural extension of the Lie bracket of vector fields).</p>
+
+{% endblock %}
